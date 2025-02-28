@@ -21,4 +21,6 @@ public interface CategoryMapper {
     void save(Category category);
 
     Page<Category> pageQuery(CategoryPageQueryDTO categoryPageQueryDTO);
+
+    void update(Category category);
 }

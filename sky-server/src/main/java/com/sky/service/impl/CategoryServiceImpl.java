@@ -69,4 +69,19 @@ public class CategoryServiceImpl implements CategoryService {
 
         return new PageResult(total,result);
     }
+
+    /**
+     * 套餐禁用启用
+     * @param status
+     * @param id
+     */
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        Category category = new Category().builder()
+                .status(status)
+                .id(id)
+                .build();
+
+        categoryMapper.update(category);
+    }
 }
