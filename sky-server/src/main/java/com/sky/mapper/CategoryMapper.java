@@ -11,6 +11,8 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @author czq
  * @version 1.0
@@ -33,4 +35,6 @@ public interface CategoryMapper {
 
     @Delete("delete from category where id = #{id}")
     void delete(Long id);
+
+    List<Category> list(Integer type);
 }

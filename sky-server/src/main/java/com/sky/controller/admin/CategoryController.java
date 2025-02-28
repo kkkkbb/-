@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author czq
  * @version 1.0
@@ -33,9 +35,9 @@ public class CategoryController {
      * @return
      */
     @PostMapping
-    @ApiOperation("添加套餐")
+    @ApiOperation("添加套餐或菜品")
     public Result save(@RequestBody  CategoryDTO categorydto) {
-        log.info("套餐新增，参数为：{}", categorydto);
+        log.info("套餐或菜品新增，参数为：{}", categorydto);
         categoryService.save(categorydto);
 
         return Result.success();
@@ -85,6 +87,16 @@ public class CategoryController {
         return Result.success();
     }
 
-
+    /**
+     * 根据类型查询分类
+     * @param type
+     * @return
+     */
+    @GetMapping("/list")
+    @ApiOperation("根据类型查询分类")
+    public Result<List<Category>> list(Integer type){
+        List<Category> list = categoryService.list(type);
+        return Result.success(list);
+    }
 
 }
