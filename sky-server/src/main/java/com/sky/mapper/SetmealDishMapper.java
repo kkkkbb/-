@@ -25,6 +25,9 @@ public interface SetmealDishMapper {
      */
     void save(SetmealDish setmealDish);
 
-
-
+    /**
+     * 批量删除套餐和菜品之间的联系
+     * @param ids
+     */
+    void delete(@Param("ids")  List<Long> ids);
 }

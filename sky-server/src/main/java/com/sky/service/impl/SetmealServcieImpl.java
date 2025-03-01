@@ -77,4 +77,16 @@ public class SetmealServcieImpl implements SetmealService {
 
         return new PageResult(total,result);
     }
+
+    /**
+     * 批量删除套餐
+     * @param ids
+     */
+    @Override
+    public void delete(List<Long> ids) {
+        //删除套餐
+        setmealMapper.delete(ids);
+        //删除套餐与菜品之间的联系
+        setmealDishMapper.delete(ids);
+    }
 }
