@@ -49,4 +49,19 @@
 
     </select>
 
+    <select id="selectALl" resultType="com.sky.entity.Dish">
+        select * from dish
+        <where>
+            <if test="dish.categoryId != null">
+                and category_id = #{dish.categoryId}
+            </if>
+            <if test="dish.name != null">
+                and name like concat('%',#{dish.name},'%')
+            </if>
+            <if test="dish.status != null">
+                and status = #{dish.status}
+            </if>
+        </where>
+    </select>
+
 </mapper>

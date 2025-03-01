@@ -63,4 +63,12 @@ public interface DishMapper {
      */
     @Update("update dish set status = #{status} where id = #{id}")
     void updateStatus(@Param("status") Integer status, @Param("id") Integer id);
+
+    /**
+     * 根据category id
+     *查询菜品
+     *
+     * @return
+     */
+    List<Dish> selectALl(@Param("dish") Dish dish);
 }

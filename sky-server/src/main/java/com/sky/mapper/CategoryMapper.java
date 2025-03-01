@@ -37,4 +37,6 @@ public interface CategoryMapper {
     void delete(Long id);
 
     List<Category> list(Integer type);
+
+    void selectall();
 }
