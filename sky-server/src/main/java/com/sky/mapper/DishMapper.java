@@ -62,7 +62,7 @@ public interface DishMapper {
      * @param id
      */
     @Update("update dish set status = #{status} where id = #{id}")
-    void updateStatus(@Param("status") Integer status, @Param("id") Integer id);
+    void updateStatus(@Param("status") Integer status, @Param("id") Long id);
 
     /**
      * 根据category id

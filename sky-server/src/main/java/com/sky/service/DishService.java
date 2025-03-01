@@ -54,7 +54,7 @@ public interface DishService {
      * @param status
      * @param id
      */
-    void updateStatus(Integer status, Integer id);
+    void updateStatus(Integer status, Long id);
 
     /**
      * 根据category id查询菜品
