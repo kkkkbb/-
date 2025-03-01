@@ -6,11 +6,14 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
+import com.sky.vo.DishVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author czq
@@ -43,4 +46,73 @@ public class DishController {
 
         return Result.success(pageResult);
     }
+    /**
+     * 批量删除菜品
+     */
+    @DeleteMapping
+    @ApiOperation("菜品批量删除")
+    public Result delete(@RequestParam List<Long> ids) //用注解进行类型转换
+    {
+        log.info("菜品批量删除：{}",ids);
+        dishService.delete(ids);
+
+
+        return Result.success();
+    }
+
+
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询菜品回显数据")
+    public Result<DishVO> findById(@PathVariable Long id) {
+        DishVO dishVO = dishService.selectByIdWithFlavor(id);
+
+        return Result.success(dishVO);
+    }
+
+    @PutMapping
+    @ApiOperation("根据id修改菜品数据")
+    public Result update(@RequestBody DishDTO dishDTO) {
+
+
+        return Result.success();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
