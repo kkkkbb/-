@@ -12,3 +12,6 @@ sky:
     access-key-id: LTAI5tCwRe4kYLhgKm5p96Wj
     bucket-name: sky-itcastczq
 
+  redis:
+    host: localhost
+    port: 6379
