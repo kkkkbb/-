@@ -55,4 +55,12 @@ public interface DishMapper {
      */
     @AutoFill(OperationType.UPDATE)
     void update(Dish dish);
+
+    /**
+     *根据id修改status状态 起售或者停售
+     * @param status
+     * @param id
+     */
+    @Update("update dish set status = #{status} where id = #{id}")
+    void updateStatus(@Param("status") Integer status, @Param("id") Integer id);
 }

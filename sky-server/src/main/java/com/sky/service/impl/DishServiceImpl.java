@@ -152,5 +152,17 @@ public class DishServiceImpl implements DishService {
 
     }
 
+    /**
+     * 根据id修改status状态 起售或者停售
+     * @param status
+     * @param id
+     */
+    @Override
+    public void updateStatus(Integer status, Integer id) {
+
+        dishMapper.updateStatus(status,id);
+
+    }
+
 
 }
