@@ -48,4 +48,11 @@ public interface DishMapper {
      */
     @Select("select * from  dish where id = #{id}")
     DishVO selectById(Long id);
+
+    /**
+     * 菜品表更新数据根据id
+     * @param dish
+     */
+    @AutoFill(OperationType.UPDATE)
+    void update(Dish dish);
 }
