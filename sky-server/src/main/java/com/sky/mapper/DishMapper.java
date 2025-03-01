@@ -71,4 +71,11 @@ public interface DishMapper {
      * @return
      */
     List<Dish> selectALl(@Param("dish") Dish dish);
+
+    /**
+     * 将dish和setmeal——dish表连接根据setmeal id来查询是否存在dish已经停售
+     * @param id
+     * @return
+     */
+    List<Dish> selectWithSetMealDishById(Long id);
 }
