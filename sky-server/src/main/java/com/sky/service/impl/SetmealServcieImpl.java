@@ -138,4 +138,32 @@ public class SetmealServcieImpl implements SetmealService {
 
         return setmealVO;
     }
+
+    /**
+     * 套餐信息修改
+     * @param setmealDTO
+     */
+    @Override
+    @Transactional
+    public void update(SetmealDTO setmealDTO) {
+
+        Setmeal setmeal = new Setmeal();
+        BeanUtils.copyProperties(setmealDTO, setmeal);
+
+        setmealMapper.update(setmeal);
+        Long id1 = setmeal.getId();
+        List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
+        Long id = setmealDTO.getId();
+        //先删除保存的关联项
+        setmealDishMapper.deleteById(id);
+
+        //然后保存关联项
+
+        for (SetmealDish setmealDish : setmealDishes) {
+            setmealDish.setSetmealId(id1);
+            setmealDishMapper.save(setmealDish);
+        }
+
+
+    }
 }
