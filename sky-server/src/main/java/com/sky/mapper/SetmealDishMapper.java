@@ -30,4 +30,11 @@ public interface SetmealDishMapper {
      * @param ids
      */
     void delete(@Param("ids")  List<Long> ids);
+
+    /**
+     * 根据id查询 信息
+     * @param id
+     * @return
+     */
+    List<SetmealDish> ById(Long id);
 }

@@ -46,5 +46,9 @@
         </where>
         ORDER BY setmeal.create_time desc
     </select>
+    <select id="ById" resultType="com.sky.vo.SetmealVO">
+        select * from setmeal
+        where id = #{id}
+    </select>
 
 </mapper>

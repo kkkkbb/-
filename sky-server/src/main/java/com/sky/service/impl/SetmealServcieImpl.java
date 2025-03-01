@@ -88,6 +88,7 @@ public class SetmealServcieImpl implements SetmealService {
      * @param ids
      */
     @Override
+    @Transactional
     public void delete(List<Long> ids) {
         //删除套餐
         setmealMapper.delete(ids);
@@ -102,6 +103,7 @@ public class SetmealServcieImpl implements SetmealService {
      * @param id
      */
     @Override
+    @Transactional
     public void statusStartOrStop(Integer status, Long id) {
         //当套餐起售时候判断是否有停售的菜品，如果有就不能起售
         if (status == StatusConstant.ENABLE) {
@@ -119,5 +121,21 @@ public class SetmealServcieImpl implements SetmealService {
                     .build();
             setmealMapper.update(setmeal);
         }
+    }
+
+    /**
+     * 根据id查询套餐信息
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional
+    public SetmealVO ById(Long id) {
+        SetmealVO setmealVO = setmealMapper.ById(id);
+        //根据id查询相应的setmeal_dish信息
+        List<SetmealDish> setmealDishes = setmealDishMapper.ById(id);
+        setmealVO.setSetmealDishes(setmealDishes);
+
+        return setmealVO;
     }
 }

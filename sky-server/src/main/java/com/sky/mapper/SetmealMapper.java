@@ -50,5 +50,12 @@ public interface SetmealMapper {
      */
     @AutoFill(value = OperationType.UPDATE)
     void update(Setmeal setmeal);
+
+    /**
+     * 根据id查询菜品信息
+     * @param id
+     * @return
+     */
+    SetmealVO ById(Long id);
 }
 
