@@ -49,5 +49,9 @@ public interface ShoppingCartMapper {
      * @param currentId
      */
     void cleanShoppingCart(@Param("userid") Long currentId);
+
+
+
+
 }
 
