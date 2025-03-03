@@ -51,7 +51,10 @@ public interface ShoppingCartMapper {
     void cleanShoppingCart(@Param("userid") Long currentId);
 
 
-
-
+    /**
+     * 删除购物数据
+     * @param id
+     */
+    void deleteById(Long id);
 }
 
