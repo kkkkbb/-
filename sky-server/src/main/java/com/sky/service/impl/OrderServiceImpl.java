@@ -1,8 +1,11 @@
 package com.sky.service.impl;
 
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.context.BaseContext;
+import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.dto.OrdersSubmitDTO;
 import com.sky.entity.AddressBook;
 import com.sky.entity.OrderDetail;
@@ -14,6 +17,7 @@ import com.sky.mapper.AddressBookMapper;
 import com.sky.mapper.OrderDetailMapper;
 import com.sky.mapper.OrderMapper;
 import com.sky.mapper.ShoppingCartMapper;
+import com.sky.result.PageResult;
 import com.sky.service.OrderService;
 import com.sky.vo.OrderSubmitVO;
 import org.springframework.beans.BeanUtils;
@@ -67,8 +71,8 @@ public class OrderServiceImpl implements OrderService {
         Orders order = new Orders();
         BeanUtils.copyProperties(ordersSubmitDTO, order);
         order.setOrderTime(LocalDateTime.now());
-        order.setStatus(Orders.PENDING_PAYMENT);
-        order.setPayStatus(Orders.UN_PAID);
+        order.setStatus(Orders.TO_BE_CONFIRMED);
+        order.setPayStatus(Orders.PAID);
         order.setNumber(String.valueOf(System.currentTimeMillis()));//订单号使用当前系统时间的时间戳
         order.setPhone(addressBook.getPhone());
         order.setConsignee(addressBook.getConsignee());
@@ -101,5 +105,23 @@ public class OrderServiceImpl implements OrderService {
                 .build();
 
         return orderSubmitVO;
+    }
+
+    /**
+     * 分类查询订单
+     * @param ordersPageQueryDTO
+     * @return
+     */
+    @Override
+    public PageResult findAll(OrdersPageQueryDTO ordersPageQueryDTO) {
+        PageHelper.startPage(ordersPageQueryDTO.getPage(),ordersPageQueryDTO.getPageSize());
+
+        Page<Orders> page = orderMapper.findAll(ordersPageQueryDTO);
+
+        long total = page.getTotal();
+        List<Orders> result = page.getResult();
+
+
+        return new PageResult(total,result);
     }
 }
