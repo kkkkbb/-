@@ -312,7 +312,7 @@ public class OrderServiceImpl implements OrderService {
                 Long orderId = orders.getId();// 订单id
 
                 // 查询订单明细
-                List<OrderDetail> orderDetails = orderDetailMapper.getByOrderid(orderId);
+                List<OrderDetail> orderDetails = orderDetailMapper.getByOrderId(orderId);
 
                 OrderVO orderVO = new OrderVO();
                 BeanUtils.copyProperties(orders, orderVO);
