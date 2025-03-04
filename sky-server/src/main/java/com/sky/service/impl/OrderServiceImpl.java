@@ -1,6 +1,7 @@
 package com.sky.service.impl;
 
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.xiaoymin.knife4j.core.util.CollectionUtils;
@@ -25,6 +26,7 @@ import com.sky.service.OrderService;
 import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
+import com.sky.websocket.WebSocketServer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +34,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -49,6 +53,8 @@ public class OrderServiceImpl implements OrderService {
     private AddressBookMapper addressBookMapper;
     @Autowired
     private ShoppingCartMapper shoppingCartMapper;
+    @Autowired
+    private WebSocketServer webSocketServer;
 
     /**
      * 用户下单
@@ -111,6 +117,15 @@ public class OrderServiceImpl implements OrderService {
                 .orderNumber(order.getNumber())
                 .orderAmount(order.getAmount())
                 .build();
+
+        //通过websocket向客户端浏览器推送消息 type orderId content
+        Map map  =new HashMap();
+        map.put("type",1);//1表示来电提醒 2.表示客户催单
+        map.put("orderId",order.getId());
+        map.put("content","订单号:" + order.getNumber());
+
+        String jsonString = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(jsonString);
 
         return orderSubmitVO;
     }
@@ -183,6 +198,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderVO findOrder(Long id) {
         OrderVO orderVO = orderMapper.findOrder(id);
+        List<OrderDetail> byOrderId = orderDetailMapper.getByOrderId(id);
+
+        orderVO.setOrderDetailList(byOrderId);
         return orderVO;
     }
 
@@ -411,6 +429,30 @@ public class OrderServiceImpl implements OrderService {
             shoppingCartMapper.insert(shoppingCart);
         }
 
+    }
+
+    /**
+     * 客户催单
+     * @param id
+     */
+    @Override
+    public void putOrder(Long id) {
+        // 根据id查询订单
+        Orders ordersDB = orderMapper.getById(id);
+
+        // 校验订单是否存在
+        if (ordersDB == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+
+        //通过websocket向客户端浏览器推送消息 type orderId content
+        Map map  =new HashMap();
+        map.put("type",2);//1表示来电提醒 2.表示客户催单
+        map.put("orderId",ordersDB.getId());
+        map.put("content","订单号:" + ordersDB.getNumber());
+
+        String jsonString = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(jsonString);
     }
 
 
