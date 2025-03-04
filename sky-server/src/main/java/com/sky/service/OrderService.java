@@ -78,4 +78,25 @@ public interface OrderService {
      */
 
     PageResult userPagefianAllhistoryOrders(int page, int pageSize, Integer status);
+
+
+    /**
+     * 查询订单详情
+     * @param id
+     * @return
+     */
+    OrderVO details(Long id);
+
+    /**
+     * 用户取消订单
+     * @param id
+     */
+    void userCancelById(Long id) throws Exception;
+
+    /**
+     * 再来一单
+     *
+     * @param id
+     */
+    void repetition(Long id);
 }
