@@ -167,12 +167,40 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.update(orders);
     }
 
+    /**
+     * 派送订单
+     * @param id
+     */
     @Override
     public void DispatchOrder(Long id) {
         Orders orders = Orders.builder()
                 .id(id)
                 .status(Orders.DELIVERY_IN_PROGRESS)
                 .build();
+        orderMapper.update(orders);
+    }
+
+    /**
+     * 完成订单
+     * @param id
+     */
+    @Override
+    public void endOrder(Long id) {
+        Orders orders = Orders.builder()
+                .id(id)
+                .status(Orders.COMPLETED)
+                .build();
+        orderMapper.update(orders);
+    }
+
+    /**
+     * 取消订单
+     * @param orders
+     */
+    @Override
+    public void cancelOrder(Orders orders) {
+        orders.setStatus(Orders.CANCELLED);
+        orders.setCancelTime(LocalDateTime.now());
         orderMapper.update(orders);
     }
 }

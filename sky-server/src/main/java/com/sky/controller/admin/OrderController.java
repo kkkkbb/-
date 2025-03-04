@@ -55,7 +55,7 @@ public class OrderController {
     }
 
     @PutMapping("/rejection")
-    @ApiOperation("接单")
+    @ApiOperation("拒单")
     public Result refuseOrder(@RequestBody Orders orders){
         log.info("拒单：{}",orders);
         orderService.refuseOrder(orders);
@@ -67,6 +67,22 @@ public class OrderController {
     public Result DispatchOrder(@PathVariable Long id){
         log.info("派送订单：{}",id);
         orderService.DispatchOrder(id);
+        return Result.success();
+    }
+
+    @PutMapping("/complete/{id}")
+    @ApiOperation("完成订单")
+    public Result endOrder(@PathVariable Long id){
+        log.info("完成订单：{}",id);
+        orderService.endOrder(id);
+        return Result.success();
+    }
+
+    @PutMapping("/cancel")
+    @ApiOperation("取消订单")
+    public Result cancelOrder(@RequestBody Orders orders){
+        log.info("取消订单");
+        orderService.cancelOrder(orders);
         return Result.success();
     }
 }

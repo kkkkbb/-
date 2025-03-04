@@ -52,4 +52,15 @@ public interface OrderService {
      * @param id
      */
     void DispatchOrder(Long id);
+
+    /**
+     * 完成
+     * @param id
+     */
+    void endOrder(Long id);
+
+    /**
+     * 取消订单
+     */
+    void cancelOrder(Orders orders);
 }
