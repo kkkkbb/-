@@ -20,6 +20,7 @@ import com.sky.mapper.ShoppingCartMapper;
 import com.sky.result.PageResult;
 import com.sky.service.OrderService;
 import com.sky.vo.OrderSubmitVO;
+import com.sky.vo.OrderVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,8 +44,10 @@ public class OrderServiceImpl implements OrderService {
     private AddressBookMapper addressBookMapper;
     @Autowired
     private ShoppingCartMapper shoppingCartMapper;
+
     /**
      * 用户下单
+     *
      * @param ordersSubmitDTO
      * @return
      */
@@ -55,16 +58,16 @@ public class OrderServiceImpl implements OrderService {
         //处理异常信息，地址簿为空，购物车数据为空
         Long addressBookId = ordersSubmitDTO.getAddressBookId();
         AddressBook addressBook = addressBookMapper.getById(addressBookId);
-        if(addressBook == null) {
+        if (addressBook == null) {
             throw new AddressBookBusinessException(MessageConstant.ADDRESS_BOOK_IS_NULL);
         }
         //查询当前数据的购物车数据
         Long userId = BaseContext.getCurrentId();
         ShoppingCart shoppingCart = ShoppingCart.builder()
-                                    .userId(userId)
-                                    .build();
+                .userId(userId)
+                .build();
         List<ShoppingCart> list = shoppingCartMapper.list(shoppingCart);
-        if(list == null || list.size() == 0) {
+        if (list == null || list.size() == 0) {
             throw new ShoppingCartBusinessException(MessageConstant.SHOPPING_CART_IS_NULL);
         }
         //向订单表插入一条数据
@@ -109,12 +112,13 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * 分类查询订单
+     *
      * @param ordersPageQueryDTO
      * @return
      */
     @Override
     public PageResult findAll(OrdersPageQueryDTO ordersPageQueryDTO) {
-        PageHelper.startPage(ordersPageQueryDTO.getPage(),ordersPageQueryDTO.getPageSize());
+        PageHelper.startPage(ordersPageQueryDTO.getPage(), ordersPageQueryDTO.getPageSize());
 
         Page<Orders> page = orderMapper.findAll(ordersPageQueryDTO);
 
@@ -122,6 +126,33 @@ public class OrderServiceImpl implements OrderService {
         List<Orders> result = page.getResult();
 
 
-        return new PageResult(total,result);
+        return new PageResult(total, result);
+    }
+
+    /**
+     * 查看订单详情
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public OrderVO findOrder(Long id) {
+        OrderVO orderVO = orderMapper.findOrder(id);
+        return orderVO;
+    }
+
+    /**
+     * 接单
+     *
+     * @param id
+     */
+    @Override
+    public void update(Long id) {
+        Orders orders = Orders.builder()
+                .id(id)
+                .status(Orders.CONFIRMED)
+                .build();
+        orderMapper.update(orders);
+
     }
 }

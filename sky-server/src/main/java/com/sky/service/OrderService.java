@@ -5,6 +5,7 @@ import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.dto.OrdersSubmitDTO;
 import com.sky.result.PageResult;
 import com.sky.vo.OrderSubmitVO;
+import com.sky.vo.OrderVO;
 
 /**
  * @author czq
@@ -24,4 +25,17 @@ public interface OrderService {
      * @return
      */
     PageResult findAll(OrdersPageQueryDTO ordersPageQueryDTO);
+
+    /**
+     * c查看订单详情
+     * @param id
+     * @return
+     */
+    OrderVO findOrder(Long id);
+
+    /**
+     * 接单
+     * @param id
+     */
+    void update(Long id);
 }

@@ -16,6 +16,18 @@
              #{consignee},#{cancelReason},#{rejectionReason},#{cancelTime},#{estimatedDeliveryTime},
              #{deliveryStatus},#{deliveryTime},#{packAmount},#{tablewareNumber},#{tablewareStatus})
     </insert>
+    <update id="update">
+        update orders
+        <set>
+            <if test="status != null">status = #{status} </if>
+
+        </set>
+        where id = #{id}
+        Order by order_time desc
+
+
+
+    </update>
     <select id="findAll" resultType="com.sky.entity.Orders">
         select * from orders
         <where>
@@ -25,5 +37,9 @@
             <if test="endTime != null">and order_time &lt;= #{endTime}</if>
         <if test="status != null">status = #{status}</if>
         </where>
+    </select>
+    <select id="findOrder" resultType="com.sky.vo.OrderVO">
+        select * from orders
+        where id = #{id};
     </select>
 </mapper>
