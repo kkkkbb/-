@@ -5,6 +5,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.context.BaseContext;
+import com.sky.dto.OrdersDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.dto.OrdersSubmitDTO;
 import com.sky.entity.AddressBook;
@@ -154,5 +155,15 @@ public class OrderServiceImpl implements OrderService {
                 .build();
         orderMapper.update(orders);
 
+    }
+
+    /**
+     * 拒单
+     * @param orders
+     */
+    @Override
+    public void refuseOrder(Orders orders) {
+        orders.setStatus(Orders.CANCELLED);
+        orderMapper.update(orders);
     }
 }

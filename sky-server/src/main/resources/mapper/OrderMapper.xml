@@ -19,8 +19,8 @@
     <update id="update">
         update orders
         <set>
-            <if test="status != null">status = #{status} </if>
-
+            <if test="status != null">status = #{status}, </if>
+            <if test="rejectionReason != null">rejection_reason  =#{rejectionReason}</if>
         </set>
         where id = #{id}
         Order by order_time desc
