@@ -8,6 +8,7 @@ import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.OrderService;
 import com.sky.vo.OrderOverViewVO;
+import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
 import io.swagger.annotations.Api;
@@ -84,5 +85,12 @@ public class OrderController {
         log.info("取消订单");
         orderService.cancelOrder(orders);
         return Result.success();
+    }
+
+    @GetMapping("/statistics")
+    @ApiOperation("查看各个状态的订单数量统计")
+    public Result<OrderStatisticsVO> statistics(){
+        OrderStatisticsVO orderStatisticsVO = orderService.findorderStatistics();
+        return  Result.success(orderStatisticsVO);
     }
 }

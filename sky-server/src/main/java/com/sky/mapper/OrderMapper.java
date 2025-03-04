@@ -40,6 +40,10 @@ public interface OrderMapper {
      */
     void update(Orders orders);
 
-
-
+    /**
+     * 各个状态的订单数量统计
+     * @param orders
+     * @return
+     */
+    Integer count(Orders orders);
 }
