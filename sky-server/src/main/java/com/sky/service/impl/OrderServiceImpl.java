@@ -161,7 +161,7 @@ public class OrderServiceImpl implements OrderService {
      */
     private String getOrderDishesStr(Orders orders) {
         // 查询订单菜品详情信息（订单中的菜品和数量）
-        List<OrderDetail> orderDetailList = orderDetailMapper.getByOrderId(orders.getId());
+        List<OrderDetail> orderDetailList = orderDetailMapper.getByOrderid(orders.getId());
 
         // 将每一条订单菜品信息拼接为字符串（格式：宫保鸡丁*3；）
         List<String> orderDishList = orderDetailList.stream().map(x -> {
@@ -284,4 +284,45 @@ public class OrderServiceImpl implements OrderService {
         orderStatisticsVO.setToBeConfirmed(toBeConfirmed);
         return orderStatisticsVO;
     }
+
+    /**
+     * 查询用户历史订单
+     * @param page
+     * @param pageSize
+     * @param status
+     * @return
+     */
+    @Override
+    public PageResult userPagefianAllhistoryOrders(int page, int pageSize, Integer status) {
+        // 设置分页
+        PageHelper.startPage(page, pageSize);
+
+        OrdersPageQueryDTO ordersPageQueryDTO = new OrdersPageQueryDTO();
+        ordersPageQueryDTO.setUserId(BaseContext.getCurrentId());
+        ordersPageQueryDTO.setStatus(status);
+
+        // 分页条件查询
+        Page<Orders> pages = orderMapper.pageQuery(ordersPageQueryDTO);
+
+        List<OrderVO> list = new ArrayList();
+
+        // 查询出订单明细，并封装入OrderVO进行响应
+        if (pages != null && pages.getTotal() > 0) {
+            for (Orders orders : pages) {
+                Long orderId = orders.getId();// 订单id
+
+                // 查询订单明细
+                List<OrderDetail> orderDetails = orderDetailMapper.getByOrderid(orderId);
+
+                OrderVO orderVO = new OrderVO();
+                BeanUtils.copyProperties(orders, orderVO);
+                orderVO.setOrderDetailList(orderDetails);
+
+                list.add(orderVO);
+            }
+        }
+        return new PageResult(pages.getTotal(), list);
+    }
+
+
 }

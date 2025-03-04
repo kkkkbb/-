@@ -70,4 +70,12 @@ public interface OrderService {
      * @return
      */
     OrderStatisticsVO findorderStatistics();
+
+    /**
+     * 用户查询历史订单
+     * @param page, pageSize, status
+     * @return
+     */
+
+    PageResult userPagefianAllhistoryOrders(int page, int pageSize, Integer status);
 }

@@ -3,10 +3,14 @@ package com.sky.mapper;
 
 import com.github.pagehelper.Page;
 import com.sky.dto.OrdersPageQueryDTO;
+import com.sky.entity.OrderDetail;
 import com.sky.entity.Orders;
 import com.sky.vo.OrderVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+
+import java.util.List;
 
 /**
  * @author czq
@@ -46,4 +50,18 @@ public interface OrderMapper {
      * @return
      */
     Integer count(Orders orders);
+
+    /**
+     * 用户查询订单
+     * @param ordersPageQueryDTO
+     * @return
+     */
+    Page<Orders> pageQuery(OrdersPageQueryDTO ordersPageQueryDTO);
+    /**
+     * 根据订单id查询订单明细
+     * @param orderId
+     * @return
+     */
+
+
 }
