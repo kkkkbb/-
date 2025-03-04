@@ -61,4 +61,12 @@ public class OrderController {
         orderService.refuseOrder(orders);
         return Result.success();
     }
+
+    @PutMapping("/delivery/{id}")
+    @ApiOperation("派送订单")
+    public Result DispatchOrder(@PathVariable Long id){
+        log.info("派送订单：{}",id);
+        orderService.DispatchOrder(id);
+        return Result.success();
+    }
 }

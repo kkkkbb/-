@@ -46,4 +46,10 @@ public interface OrderService {
      * @param orders
      */
     void refuseOrder(Orders orders);
+
+    /**
+     * 派送订单
+     * @param id
+     */
+    void DispatchOrder(Long id);
 }
