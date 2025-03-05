@@ -96,7 +96,7 @@ public interface OrderMapper {
 
     /**
      * 统计指定时间菜品销量排名前十
-     * @param map
+     * @param
      * @return
      */
     List<GoodsSalesDTO> findGoodsSalesDTO(LocalDateTime beginTime,LocalDateTime endTime);
