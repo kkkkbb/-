@@ -39,6 +39,7 @@
             <if test="endTime != null">and order_time &lt;= #{endTime}</if>
         <if test="status != null">status = #{status}</if>
         </where>
+        Order by order_time desc
     </select>
     <select id="findOrder" resultType="com.sky.vo.OrderVO">
         select * from orders
@@ -89,5 +90,15 @@
             <if test="endTime != null">and order_time &lt; #{endTime}</if>
             <if test="status != null">and status = #{status}</if>
         </where>
+    </select>
+    <select id="findGoodsSalesDTO" resultType="com.sky.dto.GoodsSalesDTO">
+        select od.name,sum(od.number) number
+            from order_detail od, orders o
+        where od.order_id = o.id and o.status = 5
+        <if test="beginTime != null">and o.order_time &gt; #{beginTime}</if>
+        <if test="endTime != null">and o.order_time &lt; #{endTime}</if>
+        group by od.name
+        order by number desc
+        limit 0,10
     </select>
 </mapper>
