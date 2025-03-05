@@ -5,6 +5,8 @@ import com.sky.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Map;
+
 /**
  * @author czq
  * @version 1.0
@@ -26,4 +28,9 @@ public interface UserMapper {
      * @param user
      */
     void save(User user);
+
+    /**
+     * 动态统计用户数量
+     */
+    Integer countByMap(Map map);
 }

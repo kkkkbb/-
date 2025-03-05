@@ -1,0 +1,31 @@
+package com.sky.service;
+
+
+import com.sky.vo.TurnoverReportVO;
+import com.sky.vo.UserReportVO;
+
+import java.time.LocalDate;
+
+/**
+ * @author czq
+ * @version 1.0
+ */
+public interface ReportService {
+
+
+    /**
+     * 营业额统计
+     * @param begin
+     * @param end
+     * @return
+     */
+    TurnoverReportVO getTurnoverReport(LocalDate begin, LocalDate end);
+
+    /**
+     * 用户数据统计
+     * @param begin
+     * @param end
+     * @return
+     */
+    UserReportVO getuserStatistics(LocalDate begin, LocalDate end);
+}
